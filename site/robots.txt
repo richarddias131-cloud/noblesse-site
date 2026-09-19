@@ -1,0 +1,6 @@
+# Ótica Noblesse — tudo liberado para buscadores.
+User-agent: *
+Allow: /
+
+# Trocar o endereço abaixo junto com o canonical quando o domínio próprio entrar.
+Sitemap: https://richarddias131-cloud.github.io/noblesse-site/sitemap.xml
