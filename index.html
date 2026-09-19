@@ -1,0 +1,1109 @@
+<!doctype html>
+<!--
+  ============================================================================
+  ÓTICA NOBLESSE — SITE INSTITUCIONAL (long-scroll, mobile-first)
+  Av. Floriano Peixoto, 818, Loja 04 — Uberlândia/MG
+  ============================================================================
+
+  ESTRUTURA DOS ARQUIVOS
+    index.html            → esta página
+    assets/css/styles.css → todo o estilo (design tokens no topo)
+    assets/js/main.js     → comportamento + objeto CONFIG (editar lá)
+    assets/img/           → fotos reais da loja
+
+  O QUE AINDA PRECISA DE INFORMAÇÃO REAL (procure por "PENDENTE" aqui e no JS):
+    1. HORÁRIO DE FUNCIONAMENTO — não publicado em lugar nenhum, porque
+       ninguém confirmou. Assim que a loja definir, preencha CONFIG.horario
+       em assets/js/main.js: os blocos de horário aparecem sozinhos na seção
+       Localização e no rodapé. Preencha também o openingHours do JSON-LD
+       (bloco marcado no final deste arquivo) para o Google exibir no mapa.
+    2. DEPOIMENTOS E NOTA DO GOOGLE — a seção Prova Social só aparece quando
+       CONFIG.depoimentos tiver itens reais (ou CONFIG.googleReviewsUrl
+       estiver preenchido). Enquanto estiver vazia, a seção fica oculta:
+       é melhor não ter prova social do que ter prova social inventada.
+    3. LOGOS DAS MARCAS — hoje renderizadas como assinaturas tipográficas.
+       Quando receber os arquivos vetoriais, troque o <span> por <img> dentro
+       de cada .brand-logo (instruções na própria seção).
+    4. HISTÓRIA DA LOJA (seção Sobre) — texto escrito a partir do que é
+       verificável (o espaço, os equipamentos, as marcas). Se houver data de
+       fundação, nome dos sócios ou uma história de origem, mande que eu ajusto.
+    5. ESTACIONAMENTO — não incluído por falta de informação confirmada.
+    6. IMAGEM/VÍDEO DA TORRE iVISION — a seção #ivision usa hoje uma foto do
+       salão como provisório (ela não mostra a torre). Instruções de troca, e de
+       como colocar vídeo no lugar, no comentário acima daquela seção.
+    7. ATENÇÃO — CONFLITO DE TEXTO: as seções Diferenciais, Serviços, Sobre e a
+       linha de prova do hero ainda descrevem o iVision como "simulação no tablet
+       do balcão", versão anterior à informação de que se trata de uma torre
+       interativa com IA. Esses quatro trechos precisam ser reescritos para não
+       contradizerem a seção #ivision.
+    8. NATUREZA DO EVENTO DE 26/09 — é a ABERTURA da loja ou um evento de
+       inauguração de uma loja que já opera? A resposta muda a faixa do hero e o
+       primeiro parágrafo de #sobre (comentários PENDENTE nos dois lugares).
+    9. DESTINO DO "VER CATÁLOGO" — o botão já está pronto e comentado no
+       cabeçalho de #marcas, esperando a confirmação de para onde ele aponta.
+  ============================================================================
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ótica Noblesse | Ótica em Uberlândia — óculos de grau, solares e exame de vista</title>
+<meta name="description" content="Ótica boutique em Uberlândia (MG): armações de grife, óculos de sol, lentes com proteção UV testada na loja e exame de vista com hora marcada. Av. Floriano Peixoto, 818.">
+<meta name="theme-color" content="#3C1D49">
+<!-- ==========================================================================
+     ENDEREÇO DE PUBLICAÇÃO — trocar em TODOS os 4 lugares ao mudar de endereço
+     (canonical e og:url aqui, "url" e "image" no JSON-LD no fim do arquivo,
+     mais a linha do sitemap.xml).
+
+     Hoje:   https://richarddias131-cloud.github.io/noblesse-site/
+     Depois: https://www.oticanoblesse.com.br/  (quando o domínio entrar no ar)
+
+     O canonical precisa apontar para o endereço onde o site realmente está.
+     Apontar para um domínio que ainda não existe faz o Google não indexar.
+     ========================================================================== -->
+<link rel="canonical" href="https://richarddias131-cloud.github.io/noblesse-site/">
+
+<!-- Open Graph / WhatsApp — a URL da imagem precisa ser ABSOLUTA: caminho
+     relativo não é resolvido por WhatsApp, Instagram e Facebook, e a prévia do
+     link sai sem foto. og-noblesse.jpg é 1200x630, o formato dessas prévias. -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Ótica Noblesse">
+<meta property="og:url" content="https://richarddias131-cloud.github.io/noblesse-site/">
+<meta property="og:title" content="Ótica Noblesse | Seu estilo começa no olhar">
+<meta property="og:description" content="Ótica boutique em Uberlândia: curadoria de armações de grife, lentes com proteção UV testada na loja e atendimento com hora marcada.">
+<meta property="og:image" content="https://richarddias131-cloud.github.io/noblesse-site/assets/img/og-noblesse.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Interior da Ótica Noblesse, com prateleiras douradas e paredes lilás.">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233C1D49'/%3E%3Cg fill='none' stroke='%23D8B978' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='21' cy='34' r='11'/%3E%3Ccircle cx='43' cy='34' r='11'/%3E%3Cpath d='M32 32c0-4 2-6 5-6'/%3E%3Cpath d='M10 32c0-6 3-9 6-10M54 32c0-6-3-9-6-10'/%3E%3C/g%3E%3C/svg%3E">
+
+<!-- Fontes locais (assets/fonts) — sem folha de estilo externa bloqueando a
+     renderização. As duas usadas na primeira dobra vêm pré-carregadas. -->
+<link rel="preload" href="assets/fonts/montserrat-var-400-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/cormorant-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="assets/img/hero-1200.webp"
+      imagesrcset="assets/img/hero-760.webp 760w, assets/img/hero-1200.webp 1200w" imagesizes="100vw">
+<link rel="stylesheet" href="assets/css/styles.css">
+
+<!-- As animações de entrada só existem se o JS estiver de pé. O watchdog abaixo
+     devolve o conteúdo à tela caso o script principal não carregue ou quebre —
+     nenhum texto pode ficar invisível por causa de uma animação. -->
+<script>
+  document.documentElement.classList.add('js');
+  setTimeout(function () {
+    if (!window.__noblesseRevealReady) document.documentElement.classList.remove('js');
+  }, 3500);
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<!-- ========================================================================
+     HEADER FIXO — transparente sobre o hero, sólido a partir de 80px de scroll
+     ======================================================================== -->
+<header class="site-header" id="site-header">
+  <div class="shell header-inner">
+
+    <a class="logo" href="#topo" aria-label="Ótica Noblesse — início">
+      <!-- Ícone: releitura do óculos estilizado da logo real. Substituir pelo
+           vetor oficial quando ele chegar (manter o mesmo tamanho: 44x22). -->
+      <svg class="logo-mark" viewBox="0 0 64 30" aria-hidden="true" focusable="false">
+        <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 8c0-2.2 1.6-3.6 4-4"/>
+          <path d="M60 8c0-2.2-1.6-3.6-4-4"/>
+          <path d="M4 10c0 8 4.2 13 10.5 13S26 18 26 11c0-1.6-.6-2.4-2.2-2.7C21.4 7.8 17.6 7.6 14 7.6S6.6 7.8 6 8.3C4.6 8.7 4 9 4 10z"/>
+          <path d="M60 10c0 8-4.2 13-10.5 13S38 18 38 11c0-1.6.6-2.4 2.2-2.7 2.4-.5 6.2-.7 9.8-.7s7.4.2 8 .7c1.4.4 2 .7 2 2z"/>
+          <path d="M26 11c1.8-1.4 8.2-1.4 12 0"/>
+        </g>
+      </svg>
+      <span class="logo-text">
+        <span class="logo-kicker">Ótica</span>
+        <span class="logo-name">Noblesse</span>
+      </span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Navegação principal">
+      <ul class="nav-list">
+        <li><a href="#diferenciais">Diferenciais</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#marcas">Marcas</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#localizacao">Localização</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a class="nav-phone" href="tel:+5534997202967">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 5.7a2 2 0 0 1 2-2.2Z"/></svg>
+          <span>(34) 99720-2967</span>
+        </a>
+        <a class="btn btn-gold btn-sm" href="#contato" data-track="agendar-header">Agendar exame</a>
+      </div>
+    </nav>
+
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Abrir menu">
+      <span class="menu-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+
+  </div>
+</header>
+
+<main id="conteudo">
+
+<!-- ========================================================================
+     HERO — foto real do interior da loja + scrim ameixa para garantir contraste
+     ======================================================================== -->
+<section class="hero" id="topo">
+  <div class="hero-media">
+    <img src="assets/img/hero-1200.webp"
+         srcset="assets/img/hero-760.webp 760w, assets/img/hero-1200.webp 1200w" sizes="100vw"
+         width="1200" height="1600"
+         alt="Interior da Ótica Noblesse: paredes lilás, prateleiras douradas com armações e poltronas de veludo rosa." fetchpriority="high" decoding="async">
+  </div>
+
+  <!-- ======================================================================
+       FAIXA DE INAUGURAÇÃO — 26/09 (sábado), a partir das 10h
+
+       Começa oculta e só é exibida pelo JS enquanto CONFIG.evento.ativo for
+       true E a data atual for anterior a CONFIG.evento.dataFim (main.js). Se o
+       script falhar, a faixa não aparece — melhor nenhum convite do que um
+       convite vencido no ar. Depois do dia 26 ela some sozinha.
+
+       PENDENTE — CONFIRMAR COM A LOJA antes de publicar: o dia 26/09 é a
+       ABERTURA da loja (primeira operação) ou um EVENTO DE INAUGURAÇÃO de uma
+       loja que já está funcionando?
+         • Se for ABERTURA: trocar "Inauguração" por "Abertura" aqui e corrigir
+           o primeiro parágrafo de #sobre, que hoje fala no passado (há outro
+           comentário PENDENTE lá, no ponto exato).
+         • Se for EVENTO de loja que já opera: manter esta faixa como está e
+           deixar #sobre também como está.
+       ====================================================================== -->
+  <div class="hero-banner" id="faixa-evento" hidden>
+    <div class="shell hero-banner-inner">
+      <p class="hero-banner-text">
+        <strong>Convite especial · Inauguração 26/09</strong>
+        <span>Sábado, a partir das 10h · Av. Floriano Peixoto, 818</span>
+      </p>
+      <a class="btn btn-gold btn-sm" href="https://wa.me/5534997202967?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20confirmar%20presen%C3%A7a%20na%20inaugura%C3%A7%C3%A3o%20do%20dia%2026%2F09."
+         target="_blank" rel="noopener" data-track="confirmar-presenca">Confirmar presença</a>
+    </div>
+  </div>
+
+  <div class="shell hero-inner">
+    <p class="eyebrow eyebrow-light reveal">Ótica boutique · Uberlândia, MG</p>
+    <h1 class="hero-title reveal">Seu estilo <em>começa</em> no olhar</h1>
+    <p class="hero-sub reveal">
+      Curadoria de armações e óculos de sol de marcas renomadas, com atendimento
+      que dedica tempo ao seu rosto, ao seu grau e ao seu jeito — até o óculos
+      parecer parte de você.
+    </p>
+
+    <div class="hero-actions reveal">
+      <a class="btn btn-gold" href="#contato" data-track="agendar-hero">Agendar exame de vista</a>
+      <a class="btn btn-ghost" href="https://wa.me/5534997202967?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20exame%20de%20vista." target="_blank" rel="noopener">
+        Falar no WhatsApp
+      </a>
+    </div>
+
+    <!-- Linha de prova: só fatos verificáveis da loja. Quando existirem
+         avaliações reais no Google, troque por "nota X,X · N avaliações". -->
+    <ul class="hero-proof reveal">
+      <li>Marcas de grife e celebridade</li>
+      <li>Proteção UV testada na loja</li>
+      <li>Simulação por tablet antes de decidir</li>
+    </ul>
+  </div>
+
+  <a class="hero-scroll" href="#diferenciais" aria-label="Ver mais">
+    <span aria-hidden="true"></span>
+  </a>
+</section>
+
+<!-- ========================================================================
+     DIFERENCIAIS
+     ======================================================================== -->
+<section class="section section-champagne" id="diferenciais">
+  <div class="shell">
+
+    <header class="dif-head">
+      <h2 class="section-title reveal">Quatro coisas que você não encontra em qualquer ótica</h2>
+      <p class="section-lead reveal">
+        Cada uma delas existe por um motivo prático: tirar o "achismo" da escolha
+        do óculos e provar, ali na hora, o que você está levando para casa.
+      </p>
+    </header>
+
+    <!-- Bloco de destaque: o diferencial mais forte ganha foto grande e moldura
+         dourada, em vez de virar mais um card igual aos outros.
+         PENDENTE: substituir a foto por uma do tablet rodando a simulação
+         iVision (mesmo enquadramento vertical) e ajustar a legenda abaixo. -->
+    <article class="dif-hero reveal">
+      <figure class="dif-hero-media">
+        <img src="assets/img/atendimento-880.webp" width="880" height="1565" loading="lazy" decoding="async"
+             alt="Mesa de atendimento da Ótica Noblesse, com poltronas de veludo e espelho dourado, onde é feita a simulação.">
+        <figcaption>A mesa onde a simulação acontece</figcaption>
+      </figure>
+
+      <div class="dif-hero-body">
+        <h3>Você vê antes de decidir</h3>
+        <p>
+          A simulação iVision, feita no tablet do balcão, mostra na tela como cada
+          armação e cada tipo de lente ficam no seu rosto — em vez de você escolher
+          por uma tabela impressa e descobrir o resultado só na retirada.
+        </p>
+      </div>
+    </article>
+
+    <!-- Os outros três: linha de itens sem caixa, sem sombra e com foto real do
+         equipamento — componente visual propositalmente diferente do destaque. -->
+    <ul class="dif-list">
+
+      <li class="dif-item reveal">
+        <figure class="dif-thumb">
+          <img src="assets/img/detalhe-teste-uv.webp" width="260" height="195" loading="lazy" decoding="async"
+               alt="Medidor de proteção UV sobre o balcão da loja.">
+        </figure>
+        <div class="dif-item-body">
+          <h3>Proteção UV comprovada</h3>
+          <p>
+            Temos equipamento próprio de teste UV: sua lente é medida na sua frente
+            antes de sair da loja. Proteção solar aqui é um número que você vê, não
+            uma promessa escrita na embalagem.
+          </p>
+        </div>
+      </li>
+
+      <li class="dif-item reveal">
+        <figure class="dif-thumb">
+          <img src="assets/img/detalhe-ultrassom.webp" width="244" height="183" loading="lazy" decoding="async"
+               alt="Cuba de ultrassom usada na higienização de lentes e armações, sobre o balcão da loja.">
+        </figure>
+        <div class="dif-item-body">
+          <h3>Higienização por ultrassom</h3>
+          <p>
+            Passe na loja quando quiser: lavamos lentes e armação em ultrassom, o mesmo
+            processo usado em joalheria, que tira a sujeira das dobradiças e das
+            plaquetas. Sem custo, sem hora marcada, mesmo tempos depois da compra.
+          </p>
+        </div>
+      </li>
+
+      <li class="dif-item reveal">
+        <figure class="dif-thumb">
+          <img src="assets/img/detalhe-sabrina-sato.webp" width="360" height="270" loading="lazy" decoding="async"
+               alt="Display da coleção Sabrina Sato Eyewear com armações expostas na loja.">
+        </figure>
+        <div class="dif-item-body">
+          <h3>Grife e assinatura de celebridade</h3>
+          <p>
+            Sabrina Sato Eyewear, Carmem Vitti, Juliana Paes, John John e Fox convivem
+            nas mesmas prateleiras: coleções que saem das campanhas e chegam aqui, num
+            acervo pensado peça por peça — não um mostruário de atacado.
+          </p>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</section>
+
+<!-- ========================================================================
+     iVISION — pré-atendimento com IA (torre interativa na loja)
+
+     PENDENTE (mídia): a moldura 16:9 usa hoje uma foto do salão da loja, como
+     provisório honesto — ela NÃO mostra a torre. Quando houver material real:
+
+       • FOTO: gere um WebP 16:9 (1100px de largura) e troque o <img>.
+       • VÍDEO: substitua a <figure> inteira por
+         <video class="ivision-video" autoplay muted loop playsinline
+                poster="assets/img/ivision-ambiente-1100.webp">
+           <source src="assets/video/ivision.webm" type="video/webm">
+           <source src="assets/video/ivision.mp4" type="video/mp4">
+         </video>
+         (mudo + loop + playsinline é o que permite autoplay no iOS; mantenha o
+         vídeo abaixo de ~3 MB e o poster como primeiro quadro).
+     ======================================================================== -->
+<section class="section section-tech" id="ivision">
+  <div class="shell">
+
+    <header class="tech-head">
+      <h2 class="section-title reveal">iVision: seu atendimento começa antes de você sentar</h2>
+      <p class="section-lead reveal">
+        Uma torre interativa com inteligência artificial faz um pré-atendimento
+        óptico enquanto você espera — e o especialista já recebe você sabendo como
+        os seus olhos trabalham no dia a dia.
+      </p>
+    </header>
+
+    <div class="tech-main">
+      <figure class="tech-media reveal">
+        <img src="assets/img/ivision-ambiente-1100.webp" width="1100" height="619"
+             loading="lazy" decoding="async"
+             alt="Salão de atendimento da Ótica Noblesse, onde fica disponível a torre iVision.">
+        <figcaption>A experiência acontece na loja</figcaption>
+      </figure>
+
+      <div class="tech-text">
+        <p class="reveal">
+          Antes da conversa com o especialista, você passa alguns minutos na torre.
+          A inteligência artificial acompanha como a sua visão se comporta em
+          situações comuns e organiza tudo em um relatório.
+        </p>
+        <p class="reveal">
+          Quando você senta, esse relatório já está na mesa. A indicação de lentes
+          parte do seu uso real — não de um questionário genérico nem do
+          palpite de quem está atendendo.
+        </p>
+        <p class="tech-note reveal">
+          Sem custo e sem compromisso de compra: faz parte do atendimento da casa.
+        </p>
+      </div>
+    </div>
+
+    <ul class="tech-cards">
+
+      <li class="tech-card reveal">
+        <span class="tech-icon" aria-hidden="true">
+          <!-- rosto entre marcadores de leitura: visagismo -->
+          <svg viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10V6a2 2 0 0 1 2-2h4M28 10V6a2 2 0 0 0-2-2h-4M4 22v4a2 2 0 0 0 2 2h4M28 22v4a2 2 0 0 1-2 2h-4"/><ellipse cx="16" cy="15.5" rx="6" ry="7.5"/><path d="M13.6 14.2h.01M18.4 14.2h.01M13.8 19c1.3 1.1 3.1 1.1 4.4 0"/></g></svg>
+        </span>
+        <div>
+          <h3>Visagismo digital</h3>
+          <p>
+            A IA lê o formato do seu rosto e aponta os estilos de armação que
+            conversam com ele. Você começa a escolha por um caminho, em vez de
+            provar modelo por modelo no escuro.
+          </p>
+        </div>
+      </li>
+
+      <li class="tech-card reveal">
+        <span class="tech-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16s5-7.5 14-7.5S30 16 30 16s-5 7.5-14 7.5S2 16 2 16Z"/><circle cx="16" cy="16" r="4"/><path d="M16 6V3M16 29v-3M6 8 4 6M26 8l2-2"/></g></svg>
+        </span>
+        <div>
+          <h3>Mapeamento visual</h3>
+          <p>
+            A torre recria situações reais — dirigindo, em casa, na rua — e
+            acompanha o movimento dos seus olhos e do pescoço em cada uma delas.
+          </p>
+        </div>
+      </li>
+
+      <li class="tech-card reveal">
+        <span class="tech-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="26" height="22" rx="2.5"/><path d="M3 11h26M9 5v22"/><path d="M14 15h4v4h-4zM20 15h4v4h-4zM14 21h4v2h-4z"/></g></svg>
+        </span>
+        <div>
+          <h3>Análise comportamental</h3>
+          <p>
+            O resultado vira um mapa de calor do uso da sua visão na rotina, que
+            aponta quais lentes, tratamentos e tecnologias fazem sentido para você.
+          </p>
+        </div>
+      </li>
+
+      <li class="tech-card reveal">
+        <span class="tech-icon" aria-hidden="true">
+          <!-- relatório com recomendação confirmada -->
+          <svg viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M24 15V8l-5-5H8a1.6 1.6 0 0 0-1.6 1.6v22.8A1.6 1.6 0 0 0 8 29h8"/><path d="M19 3v5h5M11 12h7M11 17h5"/><circle cx="23" cy="23" r="6"/><path d="m20.5 23 1.8 1.8 3.4-3.6"/></g></svg>
+        </span>
+        <div>
+          <h3>Recomendação sem achismo</h3>
+          <p>
+            O especialista da Noblesse parte desse relatório para indicar a lente —
+            a mesma lógica do nosso teste de UV: mostrar, em vez de prometer.
+          </p>
+        </div>
+      </li>
+
+    </ul>
+
+    <div class="tech-cta reveal">
+      <p>Experimente o iVision na sua próxima visita.</p>
+      <div class="tech-cta-actions">
+        <a class="btn btn-gold" href="#contato" data-track="agendar-ivision">Agendar visita</a>
+        <a class="btn btn-ghost" href="https://wa.me/5534997202967?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20conhecer%20o%20iVision." target="_blank" rel="noopener">
+          Tirar dúvidas no WhatsApp
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ========================================================================
+     SERVIÇOS
+     ======================================================================== -->
+<section class="section" id="servicos">
+  <div class="shell">
+    <header class="section-head reveal">
+      <p class="eyebrow">Serviços</p>
+      <h2 class="section-title">Do exame ao ajuste final</h2>
+      <p class="section-lead">
+        Tudo o que acontece entre "preciso trocar meu óculos" e "esse é o meu óculos"
+        — inclusive o que vem depois da compra.
+      </p>
+    </header>
+
+    <div class="services">
+
+      <article class="service service-featured reveal">
+        <div class="service-body">
+          <span class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16s5-8 14-8 14 8 14 8-5 8-14 8S2 16 2 16Z"/><circle cx="16" cy="16" r="4.5"/></g></svg>
+          </span>
+          <div>
+            <h3>Exame de vista completo</h3>
+            <p>
+              Medição de grau, avaliação das suas queixas do dia a dia (tela, direção,
+              leitura) e a receita explicada em português — com hora marcada, para você
+              não esperar em pé.
+            </p>
+          </div>
+        </div>
+        <a class="btn btn-gold btn-sm" href="#contato" data-track="agendar-servicos">Agendar</a>
+      </article>
+
+      <article class="service reveal">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6c6 0 10 4.5 10 10s-4 10-10 10S6 21.5 6 16 10 6 16 6Z"/><path d="M11 13.5c1.2-2 3-3 5-3"/></g></svg>
+        </span>
+        <h3>Lentes de contato</h3>
+        <p>
+          Adaptação e venda, com teste de conforto e orientação de manuseio e
+          higiene — incluindo lentes coloridas e de descarte programado.
+        </p>
+      </article>
+
+      <article class="service reveal">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 5.5a6 6 0 0 0 7.4 8.6L15.6 26.4a3.1 3.1 0 1 1-4.4-4.4L23.5 9.7"/><path d="M11 5 5 11l4 4 6-6Z"/></g></svg>
+        </span>
+        <h3>Ajustes e manutenção</h3>
+        <p>
+          Armação torta, plaqueta gasta, parafuso solto: regulamos e higienizamos
+          em ultrassom na hora, mesmo em óculos que você não comprou aqui.
+        </p>
+      </article>
+
+      <article class="service reveal">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="20" height="26" rx="3"/><path d="M11 10h10M11 15h10"/><circle cx="16" cy="23" r="2"/></g></svg>
+        </span>
+        <h3>Simulação iVision</h3>
+        <p>
+          A escolha de armação e de lente feita na tela, lado a lado: você compara
+          tratamentos e formatos e decide vendo o resultado, não imaginando.
+        </p>
+      </article>
+
+      <article class="service reveal">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3 5 7v9c0 6.5 4.6 11.4 11 13 6.4-1.6 11-6.5 11-13V7Z"/><path d="M16 11v5.5M16 20.5h.01"/></g></svg>
+        </span>
+        <h3>Garantia dos produtos</h3>
+        <p>
+          Armações e lentes com garantia de fábrica registrada na sua compra —
+          e o acompanhamento feito por quem te atendeu, aqui na loja.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     MARCAS E COLEÇÕES
+     ======================================================================== -->
+<section class="section section-plum" id="marcas">
+  <div class="shell">
+    <header class="section-head section-head-light reveal">
+      <p class="eyebrow eyebrow-light">Marcas e coleções</p>
+      <h2 class="section-title">Assinaturas que já chegam conhecidas</h2>
+      <p class="section-lead">
+        Cinco marcas com identidade própria — da alfaiataria masculina da John John
+        ao desenho autoral de Carmem Vitti — para que a escolha seja de estilo, não
+        de falta de opção.
+      </p>
+
+      <!-- ==================================================================
+           BOTÃO "VER CATÁLOGO COMPLETO" — pronto, aguardando o destino
+
+           PENDENTE: o bio site tem um item "Catálogo / Ver catálogo". Para
+           onde ele aponta hoje? Só descomente depois de confirmar, trocando o
+           href conforme o caso:
+
+             • Instagram (hoje o catálogo visual da loja):
+               href="https://instagram.com/oticanoblesse"
+               target="_blank" rel="noopener"  → texto: "Ver catálogo no Instagram"
+
+             • PDF hospedado junto do site (coloque o arquivo em
+               assets/catalogo-noblesse.pdf):
+               href="assets/catalogo-noblesse.pdf" target="_blank" rel="noopener"
+               → acrescente o tamanho no texto, ex.: "Ver catálogo (PDF, 4 MB)",
+                 porque o visitante em 4G merece saber o que vai baixar
+
+             • WhatsApp (a loja envia as fotos sob demanda) — mantém o padrão
+               das outras seções:
+               href="https://wa.me/5534997202967?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20ver%20o%20cat%C3%A1logo%20completo."
+               target="_blank" rel="noopener"  → texto: "Pedir catálogo no WhatsApp"
+
+           Se o destino for um site/loja virtual de terceiro, me avise antes:
+           mandar o visitante para fora do site derruba a conversão daqui.
+           ================================================================== -->
+      <!--
+      <p class="marcas-cta">
+        <a class="btn btn-ghost btn-sm" href="TROCAR-PELO-DESTINO-CONFIRMADO" data-track="ver-catalogo">
+          Ver catálogo completo
+        </a>
+      </p>
+      -->
+    </header>
+
+    <!-- Logos: hoje assinaturas tipográficas. Ao receber os vetores oficiais,
+         troque o conteúdo de cada <span class="brand-logo"> por:
+         <img src="assets/img/marcas/nome.svg" alt="Nome da marca" loading="lazy"> -->
+    <ul class="brands reveal" aria-label="Marcas trabalhadas pela Ótica Noblesse">
+      <li><span class="brand-logo brand-sabrina"><b>Sabrina Sato</b><i>Eyewear</i></span></li>
+      <li><span class="brand-logo brand-carmem"><b>Carmem Vitti</b></span></li>
+      <li><span class="brand-logo brand-juliana"><b>Juliana Paes</b></span></li>
+      <li><span class="brand-logo brand-johnjohn"><b>John John</b></span></li>
+      <li><span class="brand-logo brand-fox"><b>Fox</b><i>Eyewear</i></span></li>
+    </ul>
+
+    <div class="collections">
+
+      <!-- Fotos: recortes do acervo real da loja. Quando houver fotos lifestyle
+           dedicadas a cada categoria, troque só o src e o object-position. -->
+      <article class="collection reveal">
+        <a class="collection-link" href="https://wa.me/5534997202967?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20conhecer%20as%20arma%C3%A7%C3%B5es%20de%20grau." target="_blank" rel="noopener">
+          <figure>
+            <img src="assets/img/colecao-grau-760.webp" width="760" height="1013" loading="lazy" decoding="async"
+                 style="object-position: 50% 42%"
+                 alt="Prateleiras douradas com armações de grau na parede lilás da Ótica Noblesse.">
+          </figure>
+          <div class="collection-info">
+            <h3>Armações de grau</h3>
+            <p>Acetato, metal e titânio — do discreto de uso diário ao desenho que vira assinatura.</p>
+            <span class="link-arrow">Conhecer no WhatsApp</span>
+          </div>
+        </a>
+      </article>
+
+      <article class="collection reveal">
+        <a class="collection-link" href="https://wa.me/5534997202967?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20conhecer%20os%20%C3%B3culos%20de%20sol." target="_blank" rel="noopener">
+          <figure>
+            <img src="assets/img/colecao-sol-760.webp" width="760" height="1013" loading="lazy" decoding="async"
+                 style="object-position: 40% 35%"
+                 alt="Óculos de sol expostos nas prateleiras da Ótica Noblesse, com display da Fox Eyewear.">
+          </figure>
+          <div class="collection-info">
+            <h3>Óculos de sol</h3>
+            <p>Com ou sem grau, todos testados no nosso medidor de UV antes de saírem da loja.</p>
+            <span class="link-arrow">Conhecer no WhatsApp</span>
+          </div>
+        </a>
+      </article>
+
+      <article class="collection reveal">
+        <a class="collection-link" href="https://wa.me/5534997202967?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20conhecer%20a%20linha%20infantil." target="_blank" rel="noopener">
+          <figure>
+            <img src="assets/img/hero-760.webp" width="760" height="1013" loading="lazy" decoding="async"
+                 style="object-position: 12% 52%"
+                 alt="Prateleiras da Ótica Noblesse com armações coloridas, incluindo modelos infantis.">
+          </figure>
+          <div class="collection-info">
+            <h3>Infantil</h3>
+            <p>Armações flexíveis, leves e coloridas, ajustadas para o óculos parar de escorregar.</p>
+            <span class="link-arrow">Conhecer no WhatsApp</span>
+          </div>
+        </a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     VITRINE — esteira contínua de fotos das armações
+
+     PENDENTE (fotos): as seis imagens são recortes das fotos reais da loja —
+     mostram o acervo de verdade, mas não têm resolução de foto de produto.
+     Quando houver material próprio (armação sobre fundo neutro, foto de
+     campanha cedida pelo distribuidor ou foto de cliente usando o modelo,
+     com autorização), troque os .webp mantendo a proporção 4:3.
+
+     ATENÇÃO — DIREITO DE IMAGEM: fotos de campanha das marcas (Sabrina Sato,
+     Juliana Paes etc.) só podem ir ao ar com autorização do distribuidor.
+     Peça o kit de imagens autorizado a quem vende as coleções para a loja.
+
+     A esteira duplica os slides no HTML para o movimento não ter emenda; a
+     segunda cópia é aria-hidden para o leitor de tela não repetir tudo.
+     ======================================================================== -->
+<section class="section section-vitrine" id="vitrine">
+  <div class="shell">
+    <header class="section-head reveal">
+      <h2 class="section-title">O que está nas prateleiras hoje</h2>
+      <p class="section-lead">
+        Um giro pela vitrine real da loja. O acervo muda toda semana — se você
+        procura um modelo específico, é só pedir uma foto pelo WhatsApp.
+      </p>
+    </header>
+  </div>
+
+  <div class="vitrine" id="vitrine-esteira">
+    <div class="vitrine-trilho" id="vitrine-trilho">
+      <!-- bloco 1 (lido por leitores de tela) -->
+      <figure class="vitrine-item">
+        <img src="assets/img/vitrine-1-sabrina-sato.webp" width="480" height="360" loading="lazy" decoding="async"
+             alt="Display da coleção Sabrina Sato Eyewear com armações de grau e solares expostas.">
+      </figure>
+      <figure class="vitrine-item">
+        <img src="assets/img/vitrine-2-cores.webp" width="480" height="360" loading="lazy" decoding="async"
+             alt="Prateleiras com armações coloridas — rosa, azul e tons claros — ao lado de modelos escuros.">
+      </figure>
+      <figure class="vitrine-item">
+        <img src="assets/img/vitrine-3-solares.webp" width="480" height="360" loading="lazy" decoding="async"
+             alt="Fileira de óculos de sol e armações de grau nas prateleiras douradas da loja.">
+      </figure>
+      <figure class="vitrine-item">
+        <img src="assets/img/vitrine-4-fox.webp" width="480" height="360" loading="lazy" decoding="async"
+             alt="Display da Fox Eyewear com armações azuis e vermelhas expostas na prateleira.">
+      </figure>
+      <figure class="vitrine-item">
+        <img src="assets/img/vitrine-5-grau.webp" width="480" height="360" loading="lazy" decoding="async"
+             alt="Armações de grau em acetato e metal organizadas em várias fileiras.">
+      </figure>
+      <figure class="vitrine-item">
+        <img src="assets/img/vitrine-6-prateleira.webp" width="480" height="360" loading="lazy" decoding="async"
+             alt="Vista lateral das prateleiras douradas da Ótica Noblesse, cheias de armações.">
+      </figure>
+
+      <!-- bloco 2: cópia visual para o loop não ter emenda -->
+      <figure class="vitrine-item" aria-hidden="true">
+        <img src="assets/img/vitrine-1-sabrina-sato.webp" width="480" height="360" loading="lazy" decoding="async" alt="">
+      </figure>
+      <figure class="vitrine-item" aria-hidden="true">
+        <img src="assets/img/vitrine-2-cores.webp" width="480" height="360" loading="lazy" decoding="async" alt="">
+      </figure>
+      <figure class="vitrine-item" aria-hidden="true">
+        <img src="assets/img/vitrine-3-solares.webp" width="480" height="360" loading="lazy" decoding="async" alt="">
+      </figure>
+      <figure class="vitrine-item" aria-hidden="true">
+        <img src="assets/img/vitrine-4-fox.webp" width="480" height="360" loading="lazy" decoding="async" alt="">
+      </figure>
+      <figure class="vitrine-item" aria-hidden="true">
+        <img src="assets/img/vitrine-5-grau.webp" width="480" height="360" loading="lazy" decoding="async" alt="">
+      </figure>
+      <figure class="vitrine-item" aria-hidden="true">
+        <img src="assets/img/vitrine-6-prateleira.webp" width="480" height="360" loading="lazy" decoding="async" alt="">
+      </figure>
+    </div>
+  </div>
+
+  <div class="shell vitrine-rodape">
+    <!-- começa oculto: sem JS o botão não teria efeito, então o script é quem
+         o revela (a esteira em si roda por CSS, independente de JavaScript) -->
+    <button class="vitrine-pausa" id="vitrine-pausa" type="button" aria-pressed="false" hidden>
+      <svg class="icone-pausa" viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"><rect x="8" y="6" width="3" height="12" rx="1"/><rect x="14" y="6" width="3" height="12" rx="1"/></g></svg>
+      <svg class="icone-play" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9 6.5v11l9-5.5z"/></svg>
+      <span class="vitrine-pausa-texto">Pausar vitrine</span>
+    </button>
+
+    <a class="btn btn-outline btn-sm" href="https://wa.me/5534997202967?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20ver%20fotos%20das%20arma%C3%A7%C3%B5es%20dispon%C3%ADveis."
+       target="_blank" rel="noopener" data-track="fotos-whatsapp">Pedir fotos no WhatsApp</a>
+  </div>
+</section>
+
+<!-- ========================================================================
+     PROVA SOCIAL — renderizada por JS a partir de CONFIG.depoimentos.
+     Fica OCULTA enquanto não houver depoimentos reais ou link do Google.
+     ======================================================================== -->
+<section class="section" id="depoimentos" hidden>
+  <div class="shell">
+    <header class="section-head reveal">
+      <p class="eyebrow">Quem já passou por aqui</p>
+      <h2 class="section-title">O que dizem nossos clientes</h2>
+    </header>
+
+    <div class="testimonials" id="testimonials" role="group" aria-roledescription="carrossel" aria-label="Depoimentos de clientes">
+      <div class="testimonials-track" id="testimonials-track"><!-- preenchido por JS --></div>
+      <div class="testimonials-nav">
+        <button type="button" class="tst-btn" id="tst-prev" aria-label="Depoimento anterior">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="m14.5 5-7 7 7 7"/></svg>
+        </button>
+        <div class="tst-dots" id="tst-dots"></div>
+        <button type="button" class="tst-btn" id="tst-next" aria-label="Próximo depoimento">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="m9.5 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <a class="google-badge" id="google-badge" href="#" target="_blank" rel="noopener" hidden>
+      <svg class="g-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.9h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.4Z"/><path fill="#34A853" d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22Z"/><path fill="#FBBC05" d="M6.4 14a6 6 0 0 1 0-3.8V7.6H3.1a10 10 0 0 0 0 8.9L6.4 14Z"/><path fill="#EA4335" d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.8-2.8A10 10 0 0 0 3.1 7.6l3.3 2.6C7.2 7.8 9.4 5.9 12 5.9Z"/></svg>
+        <span class="g-text">
+          <strong id="google-rating"></strong>
+          <span id="google-count"></span>
+        </span>
+    </a>
+  </div>
+</section>
+
+<!-- ========================================================================
+     SOBRE NÓS
+     ======================================================================== -->
+<section class="section section-lilac" id="sobre">
+  <div class="shell">
+   <div class="about">
+    <figure class="about-media reveal">
+      <img src="assets/img/sobre-900.webp" width="900" height="1200" loading="lazy" decoding="async"
+           alt="Salão da Ótica Noblesse: parede ameixa com a logo dourada, poltronas de veludo rosa e mesa de atendimento.">
+    </figure>
+
+    <div class="about-text">
+      <p class="eyebrow reveal">Sobre a Noblesse</p>
+      <h2 class="section-title reveal">Uma ótica que parece um ateliê — e funciona como um laboratório</h2>
+
+      <!-- PENDENTE 1: confirmar com a loja a data de abertura, os fundadores e
+           a história de origem. O texto abaixo só afirma o que é verificável.
+
+           PENDENTE 2 — DEPENDE DA NATUREZA DO EVENTO DE 26/09 (ver comentário
+           da faixa, na seção do hero): o parágrafo abaixo está no PASSADO
+           ("abriu as portas"). Se o dia 26/09 for a ABERTURA da loja, este
+           texto fica incoerente até lá e precisa ir para o futuro/presente —
+           algo como "A Noblesse nasce na Av. Floriano Peixoto com uma decisão
+           tomada antes da primeira armação chegar". Se a loja já opera e o dia
+           26 é só o evento, manter como está. NÃO publicar sem essa resposta. -->
+      <p class="reveal">
+        A Noblesse abriu as portas na Av. Floriano Peixoto com uma decisão tomada antes
+        da primeira armação chegar: o lugar onde alguém escolhe o rosto que vai usar
+        todos os dias não pode parecer uma sala de espera. Daí as paredes lilás, o
+        latão nas prateleiras, as poltronas de veludo — e a mesa onde a conversa
+        acontece sentada, no seu tempo.
+      </p>
+      <p class="reveal">
+        Por trás da vitrine, porém, a operação é técnica. Medidor de UV, higienização
+        por ultrassom e simulação assistida por tablet existem aqui pelo mesmo motivo:
+        transformar em evidência o que, na maioria das óticas, o cliente precisa aceitar
+        na base da confiança.
+      </p>
+
+    </div>
+   </div>
+
+   <!-- ======================================================================
+        MISSÃO E VISÃO — capítulo próprio, separado da história por um filete
+
+           O texto abaixo é uma reescrita do documento oficial da loja, na voz
+           do site — conforme o briefing ("evite qualquer frase que poderia
+           estar no site de qualquer empresa"). O conteúdo é fiel; o que muda é
+           a forma. O documento oficial, palavra por palavra, está guardado
+           aqui embaixo caso a loja prefira publicá-lo literalmente:
+
+           MISSÃO — Cuidar da saúde visual de nossos clientes, oferecendo
+           produtos de alta qualidade, atendimento personalizado e soluções que
+           unam conforto, segurança, tecnologia e estilo. Nosso compromisso é
+           proporcionar uma experiência de confiança, fazendo com que cada
+           cliente tenha motivos para voltar e nos recomendar.
+
+           VISÃO — Ser reconhecida como uma ótica de referência em qualidade,
+           saúde visual e atendimento, construindo relacionamentos duradouros
+           com nossos clientes e tornando cada visita uma experiência de
+           excelência.
+
+           VALORES — Saúde Visual em Primeiro Lugar · Qualidade · Confiança ·
+           Atendimento Humanizado · Excelência · Ética e Transparência ·
+           Inovação · Relacionamento (descrições completas no documento da loja).
+        ====================================================================== -->
+   <div class="pillars">
+      <header class="pillars-head">
+        <p class="eyebrow reveal">O que nos guia</p>
+        <h3 class="reveal">Missão e visão</h3>
+      </header>
+
+      <div class="creed">
+        <blockquote class="creed-item reveal">
+          <p>
+            Cuidar da saúde visual de cada cliente com produtos que aguentam o uso
+            real, atendimento que lembra o seu nome e tecnologia que mostra — em vez
+            de prometer — o que você leva para casa. Conforto, segurança e estilo no
+            mesmo par: é isso que faz alguém voltar e indicar a Noblesse.
+          </p>
+          <footer>Missão</footer>
+        </blockquote>
+
+        <blockquote class="creed-item reveal">
+          <p>
+            Ser a ótica que o uberlandense indica sem pensar duas vezes — referência
+            em qualidade e em saúde visual, com um atendimento que transforma cada
+            visita em experiência, não em protocolo.
+          </p>
+          <footer>Visão</footer>
+        </blockquote>
+      </div>
+   </div>
+
+   <!-- Os oito valores oficiais, resumidos em uma linha cada. -->
+   <div class="values-block">
+     <header class="values-head">
+       <p class="eyebrow reveal">Princípios</p>
+       <h3 class="reveal">Os valores por trás de cada atendimento</h3>
+     </header>
+
+     <ul class="values">
+       <li class="value reveal">
+         <span class="value-num" aria-hidden="true">01</span>
+         <h3>Saúde visual em primeiro lugar</h3>
+         <p>O cuidado com a sua visão vem antes de fechar a venda.</p>
+       </li>
+       <li class="value reveal">
+         <span class="value-num" aria-hidden="true">02</span>
+         <h3>Qualidade</h3>
+         <p>Produtos e serviços dentro dos padrões mais altos de segurança.</p>
+       </li>
+       <li class="value reveal">
+         <span class="value-num" aria-hidden="true">03</span>
+         <h3>Confiança</h3>
+         <p>Relações transparentes e honestas, feitas para durar.</p>
+       </li>
+       <li class="value reveal">
+         <span class="value-num" aria-hidden="true">04</span>
+         <h3>Atendimento humanizado</h3>
+         <p>Cada pessoa é ouvida antes de receber uma solução.</p>
+       </li>
+       <li class="value reveal">
+         <span class="value-num" aria-hidden="true">05</span>
+         <h3>Excelência</h3>
+         <p>Melhorar sempre: produto, serviço e atendimento.</p>
+       </li>
+       <li class="value reveal">
+         <span class="value-num" aria-hidden="true">06</span>
+         <h3>Ética e transparência</h3>
+         <p>Responsabilidade, respeito e clareza em cada relação.</p>
+       </li>
+       <li class="value reveal">
+         <span class="value-num" aria-hidden="true">07</span>
+         <h3>Inovação</h3>
+         <p>Tecnologia e tendências acompanhadas de perto, não de longe.</p>
+       </li>
+       <li class="value reveal">
+         <span class="value-num" aria-hidden="true">08</span>
+         <h3>Relacionamento</h3>
+         <p>Mais do que vender óculos: clientes para a vida toda.</p>
+       </li>
+     </ul>
+   </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     LOCALIZAÇÃO
+     ======================================================================== -->
+<section class="section" id="localizacao">
+  <div class="shell">
+    <header class="section-head reveal">
+      <p class="eyebrow">Onde estamos</p>
+      <h2 class="section-title">No coração da Floriano Peixoto</h2>
+    </header>
+
+    <div class="location">
+      <div class="location-map reveal">
+        <iframe
+          title="Mapa com a localização da Ótica Noblesse na Av. Floriano Peixoto, 818, Loja 04, Uberlândia, MG"
+          src="https://www.google.com/maps?q=Av.+Floriano+Peixoto,+818,+Uberl%C3%A2ndia+-+MG,+38400-102&output=embed"
+          width="600" height="450" style="border:0" loading="lazy" allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+      <div class="location-info reveal">
+        <h3>Ótica Noblesse</h3>
+        <address>
+          Av. Floriano Peixoto, 818 — Loja 04<br>
+          Centro, Uberlândia — MG<br>
+          CEP 38400-102
+        </address>
+
+        <dl class="info-list">
+          <div>
+            <dt>Telefone e WhatsApp</dt>
+            <dd><a href="tel:+5534997202967">(34) 99720-2967</a></dd>
+          </div>
+          <!-- PENDENTE: o bloco de horário abaixo só aparece quando
+               CONFIG.horario for preenchido em assets/js/main.js. -->
+          <div id="horario-wrap" hidden>
+            <dt>Horário de funcionamento</dt>
+            <dd id="horario-texto"></dd>
+          </div>
+          <div id="horario-pendente">
+            <dt>Horário de funcionamento</dt>
+            <dd>Confirme o horário de hoje pelo WhatsApp — respondemos na hora.</dd>
+          </div>
+          <div>
+            <dt>Instagram</dt>
+            <dd><a href="https://instagram.com/oticanoblesse" target="_blank" rel="noopener">@oticanoblesse</a></dd>
+          </div>
+        </dl>
+
+        <div class="location-actions">
+          <a class="btn btn-plum" href="https://www.google.com/maps/dir/?api=1&destination=Av.+Floriano+Peixoto,+818,+Uberl%C3%A2ndia+-+MG,+38400-102" target="_blank" rel="noopener">Como chegar</a>
+          <a class="btn btn-outline" href="https://wa.me/5534997202967?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20exame%20de%20vista." target="_blank" rel="noopener">Falar no WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     CONTATO E AGENDAMENTO
+     ======================================================================== -->
+<section class="section section-plum" id="contato">
+  <div class="shell">
+    <header class="section-head section-head-light section-head-center reveal">
+      <p class="eyebrow eyebrow-light">Agendamento</p>
+      <h2 class="section-title">Marque seu horário</h2>
+      <p class="section-lead">
+        O agendamento é feito direto com a loja, pelo WhatsApp ou por telefone —
+        sem formulário, sem espera por retorno.
+      </p>
+    </header>
+
+    <div class="contact contact-solo">
+
+      <aside class="contact-direct reveal">
+        <h3>Fale agora com a loja</h3>
+        <p>
+          O atendimento por WhatsApp é feito pela mesma equipe que te recebe na loja.
+          Dá para tirar dúvida de grau, pedir foto de uma armação ou já marcar o exame.
+        </p>
+
+        <a class="btn btn-whats btn-block" href="https://wa.me/5534997202967?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20exame%20de%20vista." target="_blank" rel="noopener" data-track="whats-contato">
+          <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.1 19.8L3 29l6.4-1.8A13 13 0 1 0 16 3Zm0 23.7c-2 0-4-.5-5.7-1.6l-.4-.2-3.8 1 1-3.7-.3-.4A10.7 10.7 0 1 1 16 26.7Zm6-8c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.3-.7.1a8.7 8.7 0 0 1-4.3-3.7c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.6-.5-.8-.5h-.6c-.2 0-.6.1-.9.5-.3.3-1.2 1.2-1.2 2.9s1.2 3.3 1.4 3.6c.2.2 2.5 3.8 6 5.3 2.2 1 3.1 1 4.2.9.7-.1 1.9-.8 2.2-1.6.3-.8.3-1.4.2-1.6-.1-.2-.3-.3-.6-.4Z"/></svg>
+          (34) 99720-2967
+        </a>
+
+        <a class="btn btn-ghost btn-block" href="tel:+5534997202967">Ligar para a loja</a>
+
+        <p class="contact-address">
+          Av. Floriano Peixoto, 818 — Loja 04<br>Uberlândia, MG
+        </p>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ========================================================================
+     FOOTER
+     ======================================================================== -->
+<footer class="site-footer">
+  <div class="shell footer-inner">
+
+    <div class="footer-brand">
+      <span class="logo">
+        <svg class="logo-mark" viewBox="0 0 64 30" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 8c0-2.2 1.6-3.6 4-4"/><path d="M60 8c0-2.2-1.6-3.6-4-4"/>
+            <path d="M4 10c0 8 4.2 13 10.5 13S26 18 26 11c0-1.6-.6-2.4-2.2-2.7C21.4 7.8 17.6 7.6 14 7.6S6.6 7.8 6 8.3C4.6 8.7 4 9 4 10z"/>
+            <path d="M60 10c0 8-4.2 13-10.5 13S38 18 38 11c0-1.6.6-2.4 2.2-2.7 2.4-.5 6.2-.7 9.8-.7s7.4.2 8 .7c1.4.4 2 .7 2 2z"/>
+            <path d="M26 11c1.8-1.4 8.2-1.4 12 0"/>
+          </g>
+        </svg>
+        <span class="logo-text"><span class="logo-kicker">Ótica</span><span class="logo-name">Noblesse</span></span>
+      </span>
+      <!-- NAP repetido em texto para SEO local — manter idêntico ao Google Meu Negócio -->
+      <p class="footer-nap">
+        Ótica Noblesse · Av. Floriano Peixoto, 818, Loja 04 · Uberlândia, MG ·
+        <a href="tel:+5534997202967">(34) 99720-2967</a>
+      </p>
+      <p class="footer-hours" id="footer-horario" hidden></p>
+    </div>
+
+    <nav class="footer-links" aria-label="Links do rodapé">
+      <a href="#sobre">Sobre</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#localizacao">Localização</a>
+      <a href="#contato">Contato</a>
+      <a href="politica-de-privacidade.html">Política de Privacidade</a>
+    </nav>
+
+    <div class="footer-social">
+      <a href="https://instagram.com/oticanoblesse" target="_blank" rel="noopener" aria-label="Instagram da Ótica Noblesse">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></g></svg>
+      </a>
+      <a href="https://wa.me/5534997202967" target="_blank" rel="noopener" aria-label="WhatsApp da Ótica Noblesse">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.1 19.8L3 29l6.4-1.8A13 13 0 1 0 16 3Zm0 23.7c-2 0-4-.5-5.7-1.6l-.4-.2-3.8 1 1-3.7-.3-.4A10.7 10.7 0 1 1 16 26.7Zm6-8c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.3-.7.1a8.7 8.7 0 0 1-4.3-3.7c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.6-.5-.8-.5h-.6c-.2 0-.6.1-.9.5-.3.3-1.2 1.2-1.2 2.9s1.2 3.3 1.4 3.6c.2.2 2.5 3.8 6 5.3 2.2 1 3.1 1 4.2.9.7-.1 1.9-.8 2.2-1.6.3-.8.3-1.4.2-1.6-.1-.2-.3-.3-.6-.4Z"/></svg>
+      </a>
+      <!-- PENDENTE: trocar pelo link curto do perfil no Google Meu Negócio -->
+      <a id="footer-google" href="https://www.google.com/maps/search/?api=1&query=%C3%93tica+Noblesse+Uberl%C3%A2ndia" target="_blank" rel="noopener" aria-label="Ótica Noblesse no Google">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.9h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.4Zm-9.6 9.8c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22Zm-5.6-8a6 6 0 0 1 0-3.8V7.6H3.1a10 10 0 0 0 0 8.9L6.4 14Zm5.6-8.1c1.5 0 2.8.5 3.8 1.5l2.8-2.8A10 10 0 0 0 3.1 7.6l3.3 2.6C7.2 7.8 9.4 5.9 12 5.9Z"/></svg>
+      </a>
+    </div>
+
+    <p class="footer-legal">
+      © <span id="ano"></span> Ótica Noblesse. Todos os direitos reservados.
+    </p>
+  </div>
+</footer>
+
+<!-- WhatsApp flutuante -->
+<a class="whats-float" href="https://wa.me/5534997202967?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20exame%20de%20vista."
+   target="_blank" rel="noopener" aria-label="Conversar no WhatsApp com a Ótica Noblesse" data-track="whats-float">
+  <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.1 19.8L3 29l6.4-1.8A13 13 0 1 0 16 3Zm0 23.7c-2 0-4-.5-5.7-1.6l-.4-.2-3.8 1 1-3.7-.3-.4A10.7 10.7 0 1 1 16 26.7Zm6-8c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.3-.7.1a8.7 8.7 0 0 1-4.3-3.7c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.6-.5-.8-.5h-.6c-.2 0-.6.1-.9.5-.3.3-1.2 1.2-1.2 2.9s1.2 3.3 1.4 3.6c.2.2 2.5 3.8 6 5.3 2.2 1 3.1 1 4.2.9.7-.1 1.9-.8 2.2-1.6.3-.8.3-1.4.2-1.6-.1-.2-.3-.3-.6-.4Z"/></svg>
+  <span class="whats-float-label">Agendar</span>
+</a>
+
+<!-- ========================================================================
+     SCHEMA.ORG — Optician / LocalBusiness
+     PENDENTE 1: "url" e "image" estão no endereço do GitHub Pages — trocar
+     pelo domínio próprio quando ele entrar no ar (ver DEPLOY.md).
+     PENDENTE 2: quando o horário for definido, acrescente ao objeto abaixo
+     (depois de "makesOffer", separado por vírgula) — sem comentários dentro
+     do JSON, que precisa ser válido:
+
+       "openingHoursSpecification": [
+         { "@type": "OpeningHoursSpecification",
+           "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+           "opens": "09:00", "closes": "18:00" },
+         { "@type": "OpeningHoursSpecification",
+           "dayOfWeek": ["Saturday"], "opens": "09:00", "closes": "13:00" }
+       ]
+     ======================================================================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Optician",
+  "name": "Ótica Noblesse",
+  "description": "Ótica boutique em Uberlândia (MG) com armações de grife, óculos de sol, lentes de contato, exame de vista com hora marcada, teste de proteção UV e higienização por ultrassom.",
+  "image": "https://richarddias131-cloud.github.io/noblesse-site/assets/img/og-noblesse.jpg",
+  "url": "https://richarddias131-cloud.github.io/noblesse-site/",
+  "telephone": "+55-34-99720-2967",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Av. Floriano Peixoto, 818, Loja 04",
+    "addressLocality": "Uberlândia",
+    "addressRegion": "MG",
+    "postalCode": "38400-102",
+    "addressCountry": "BR"
+  },
+  "areaServed": { "@type": "City", "name": "Uberlândia" },
+  "sameAs": ["https://instagram.com/oticanoblesse"],
+  "makesOffer": [
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Exame de vista" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Adaptação e venda de lentes de contato" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ajuste e higienização ultrassônica de armações" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Simulação assistida por tablet (iVision)" } }
+  ]
+}
+</script>
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
+
