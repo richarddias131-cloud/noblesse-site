@@ -161,7 +161,9 @@ button{font:inherit;color:inherit;}
      0,00s  ícone se desenha traço a traço (1,1s, ease-out)
      0,85s  nome entra com fade + subida (0,7s) — 250ms antes do traço acabar
      1,55s  deriva lenta do conjunto até a saída, para não ficar congelado
-     2,40s  overlay faz fade-out (0,6s) — é quando o Ken Burns do hero começa
+     2,25s  o logo sai de cena: sobe um pouco e desbota (0,5s)
+     2,30s  Ken Burns do hero começa — a foto já está viva quando a cortina abre
+     2,45s  overlay faz fade-out (0,55s) e o conteúdo do hero sobe junto
      3,00s  fim: visibility:hidden + pointer-events:none pelo fill "forwards",
             então mesmo que o JS não remova o nó, ele para de bloquear a página
    Só aparece sob .com-intro, classe decidida no <head>: sem JS, sem primeira
@@ -175,18 +177,37 @@ button{font:inherit;color:inherit;}
   /* brilho ameixa atrás da placa, para ela não flutuar num fundo chapado */
   background:
     radial-gradient(ellipse 70% 55% at 50% 46%, #4E2860 0%, #35173F 55%, var(--plum-900) 100%);
-  animation:intro-sai .6s ease 2.4s forwards;
+  animation:intro-sai .55s cubic-bezier(.4,0,.2,1) 2.45s forwards;
 }
 @keyframes intro-sai{
   to{opacity:0;visibility:hidden;pointer-events:none;}
 }
-/* O conjunto respira devagar durante todo o intro, para não congelar entre o
-   fim da escrita do nome e a saída do overlay. */
+
+/* O conteúdo do hero sobe junto com a cortina saindo: os dois movimentos se
+   sobrepõem, e é essa sobreposição que faz a passagem parecer contínua.
+   Termina em 2,95s — antes de o JS remover a classe .com-intro em 3,05s,
+   senão a animação seria cancelada no meio. */
+.com-intro .hero-inner{ animation:hero-entra .5s ease-out 2.45s both; }
+@keyframes hero-entra{
+  from{opacity:.4;transform:translateY(12px);}
+  to{opacity:1;transform:translateY(0);}
+}
+/* O conjunto respira devagar durante o intro e depois SAI DE CENA sozinho,
+   um pouco antes da cortina ameixa. Sem essa saída própria, o logo ficava
+   parado em cima do conteúdo do hero enquanto tudo desbotava junto — o que
+   lê como corte, principalmente no celular, onde ele cai sobre o título. */
 .intro-marca{
   display:flex;flex-direction:column;align-items:center;gap:16px;
-  animation:intro-deriva 2.4s ease-out both;
+  animation:
+    intro-deriva 2.25s ease-out both,
+    intro-marca-sai .5s cubic-bezier(.4,0,.6,1) 2.25s forwards;
 }
 @keyframes intro-deriva{ from{transform:scale(1);} to{transform:scale(1.025);} }
+/* começa exatamente onde a deriva parou, para não dar salto na emenda */
+@keyframes intro-marca-sai{
+  from{opacity:1;transform:scale(1.025) translateY(0);}
+  to{opacity:0;transform:scale(1.10) translateY(-10px);}
+}
 
 /* O ícone é desenhado traço a traço; pathLength="1" no SVG faz todos os
    traços andarem no mesmo ritmo, independentemente do comprimento real. */

@@ -117,8 +117,9 @@
     var comIntro = !jaViu && !menosMovimento;
 
     raiz.classList.add(comIntro ? 'com-intro' : 'sem-intro');
-    // 2,4s = momento em que o overlay começa a sair; o Ken Burns entra junto
-    raiz.style.setProperty('--intro-delay', comIntro ? '2.4s' : '0s');
+    // 2,3s: o Ken Burns começa um pouco ANTES da cortina sair, para a foto do
+    // hero já estar em movimento quando ela abre — ajuda na continuidade
+    raiz.style.setProperty('--intro-delay', comIntro ? '2.3s' : '0s');
 
     setTimeout(function () {
       if (!window.__noblesseRevealReady) raiz.classList.remove('js');
