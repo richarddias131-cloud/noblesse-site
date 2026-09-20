@@ -69,6 +69,36 @@
   var $$ = function (sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); };
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* --------------------------------------------------- 0. INTRO DE MARCA
+     A animação inteira é CSS; aqui só cuidamos de tirar o nó do caminho,
+     destravar o scroll e marcar a sessão. O <head> já tem um watchdog de
+     2,5s que faz isso sozinho caso este trecho nunca rode. */
+  (function () {
+    var raiz = document.documentElement;
+    var intro = $('#intro');
+    if (!intro) return;
+
+    // marca antes de animar: se o visitante sair no meio, a próxima página
+    // já não mostra o intro de novo
+    try { sessionStorage.setItem('noblesseIntroVista', '1'); } catch (e) {}
+
+    function encerrar() {
+      raiz.classList.remove('com-intro');
+      raiz.classList.add('sem-intro');
+      if (intro.parentNode) intro.parentNode.removeChild(intro);
+    }
+
+    // não era para aparecer (2ª visita, reduzir movimento, etc.)
+    if (!raiz.classList.contains('com-intro')) { encerrar(); return; }
+
+    var prazo = window.setTimeout(encerrar, 3050); // fim da animação: 3,0s
+    intro.addEventListener('animationend', function (e) {
+      if (e.animationName !== 'intro-sai') return;
+      window.clearTimeout(prazo);
+      encerrar();
+    });
+  })();
+
   /* ---------------------------------------------------- 1. HEADER / SCROLL */
   var header = $('#site-header');
 
@@ -136,7 +166,9 @@
   });
 
   /* ------------------------------------------ 3. REVELAÇÃO E LINK ATIVO */
-  var revealItems = $$('.reveal');
+  /* Os divisores dourados entram como mais um tipo de elemento observado pelo
+     mesmo IntersectionObserver — o CSS é que decide o efeito de cada classe. */
+  var revealItems = $$('.reveal, .divisor');
 
   if (reduceMotion || !('IntersectionObserver' in window)) {
     revealItems.forEach(function (el) { el.classList.add('is-visible'); });
