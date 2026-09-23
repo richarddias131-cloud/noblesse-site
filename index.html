@@ -81,8 +81,9 @@
 <link rel="preload" href="assets/fonts/cormorant-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/img/hero-1200.webp"
       imagesrcset="assets/img/hero-760.webp 760w, assets/img/hero-1200.webp 1200w" imagesizes="100vw">
-<!-- O logo do intro e o do header são SVG + fonte, embutidos no HTML e no CSS:
-     não há imagem de logo para pré-carregar. -->
+<!-- Logo oficial (dourado com fundo transparente): aparece no intro e no
+     header logo na primeira pintura, então vale pré-carregar. -->
+<link rel="preload" as="image" href="assets/img/logo-noblesse-240.webp" imagesrcset="assets/img/logo-noblesse-240.webp 240w, assets/img/logo-noblesse-480.webp 480w" imagesizes="(min-width:880px) 80px, 62px">
 
 <link rel="stylesheet" href="assets/css/styles.css">
 
@@ -150,26 +151,9 @@
      o foco do teclado nem ser lido por leitor de tela.
      ======================================================================== -->
 <div class="intro" id="intro" aria-hidden="true">
-  <!-- Assinatura tipográfica: o ícone é desenhado traço a traço e o nome entra
-       em seguida. É vetor + fonte, então fica nítido em qualquer tela e pesa
-       quase nada. A foto do logo na parede não serve aqui — ampliada, aparecem
-       o brilho estourado, a textura e a perspectiva da parede.
-       QUANDO CHEGAR O VETOR da logo (.svg), troque este <svg> por ele e
-       mantenha o pathLength="1" nos traços para a animação continuar. -->
+  <!-- Logo oficial da Ótica Noblesse (versão dourada, fundo transparente). -->
   <div class="intro-marca">
-    <svg class="intro-mark" viewBox="0 0 64 30" aria-hidden="true" focusable="false">
-      <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <path pathLength="1" d="M4 8c0-2.2 1.6-3.6 4-4"/>
-        <path pathLength="1" d="M60 8c0-2.2-1.6-3.6-4-4"/>
-        <path pathLength="1" d="M4 10c0 8 4.2 13 10.5 13S26 18 26 11c0-1.6-.6-2.4-2.2-2.7C21.4 7.8 17.6 7.6 14 7.6S6.6 7.8 6 8.3C4.6 8.7 4 9 4 10z"/>
-        <path pathLength="1" d="M60 10c0 8-4.2 13-10.5 13S38 18 38 11c0-1.6.6-2.4 2.2-2.7 2.4-.5 6.2-.7 9.8-.7s7.4.2 8 .7c1.4.4 2 .7 2 2z"/>
-        <path pathLength="1" d="M26 11c1.8-1.4 8.2-1.4 12 0"/>
-      </g>
-    </svg>
-    <span class="intro-texto">
-      <span class="intro-kicker">Ótica</span>
-      <span class="intro-nome">Noblesse</span>
-    </span>
+    <img class="intro-logo" src="assets/img/logo-noblesse-240.webp" srcset="assets/img/logo-noblesse-240.webp 240w, assets/img/logo-noblesse-480.webp 480w" sizes="(min-width:880px) 280px, 200px" width="240" height="228" alt="">
   </div>
 </div>
 
@@ -181,24 +165,10 @@
 <header class="site-header" id="site-header">
   <div class="shell header-inner">
 
-    <!-- Assinatura tipográfica (ícone em SVG + nome na fonte do site). Ela
-         funciona nos dois estados do header — transparente sobre o hero e
-         branco depois da rolagem —, o que uma foto não conseguiria.
-         Quando chegar o VETOR da logo, troque este <svg> por ele. -->
+    <!-- Logo oficial da Ótica Noblesse (dourado, fundo transparente): funciona
+         tanto sobre o hero quanto no header branco depois da rolagem. -->
     <a class="logo" href="#topo" aria-label="Ótica Noblesse — início">
-      <svg class="logo-mark" viewBox="0 0 64 30" aria-hidden="true" focusable="false">
-        <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 8c0-2.2 1.6-3.6 4-4"/>
-          <path d="M60 8c0-2.2-1.6-3.6-4-4"/>
-          <path d="M4 10c0 8 4.2 13 10.5 13S26 18 26 11c0-1.6-.6-2.4-2.2-2.7C21.4 7.8 17.6 7.6 14 7.6S6.6 7.8 6 8.3C4.6 8.7 4 9 4 10z"/>
-          <path d="M60 10c0 8-4.2 13-10.5 13S38 18 38 11c0-1.6.6-2.4 2.2-2.7 2.4-.5 6.2-.7 9.8-.7s7.4.2 8 .7c1.4.4 2 .7 2 2z"/>
-          <path d="M26 11c1.8-1.4 8.2-1.4 12 0"/>
-        </g>
-      </svg>
-      <span class="logo-text">
-        <span class="logo-kicker">Ótica</span>
-        <span class="logo-name">Noblesse</span>
-      </span>
+      <img class="logo-img" src="assets/img/logo-noblesse-240.webp" srcset="assets/img/logo-noblesse-240.webp 240w, assets/img/logo-noblesse-480.webp 480w" sizes="(min-width:880px) 80px, 62px" width="240" height="228" alt="">
     </a>
 
     <nav class="nav" id="nav" aria-label="Navegação principal">
@@ -989,15 +959,7 @@
 
     <div class="footer-brand">
       <span class="logo">
-        <svg class="logo-mark" viewBox="0 0 64 30" aria-hidden="true" focusable="false">
-          <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 8c0-2.2 1.6-3.6 4-4"/><path d="M60 8c0-2.2-1.6-3.6-4-4"/>
-            <path d="M4 10c0 8 4.2 13 10.5 13S26 18 26 11c0-1.6-.6-2.4-2.2-2.7C21.4 7.8 17.6 7.6 14 7.6S6.6 7.8 6 8.3C4.6 8.7 4 9 4 10z"/>
-            <path d="M60 10c0 8-4.2 13-10.5 13S38 18 38 11c0-1.6.6-2.4 2.2-2.7 2.4-.5 6.2-.7 9.8-.7s7.4.2 8 .7c1.4.4 2 .7 2 2z"/>
-            <path d="M26 11c1.8-1.4 8.2-1.4 12 0"/>
-          </g>
-        </svg>
-        <span class="logo-text"><span class="logo-kicker">Ótica</span><span class="logo-name">Noblesse</span></span>
+        <img class="logo-img" src="assets/img/logo-noblesse-240.webp" srcset="assets/img/logo-noblesse-240.webp 240w, assets/img/logo-noblesse-480.webp 480w" sizes="120px" width="240" height="228" alt="Ótica Noblesse" loading="lazy">
       </span>
       <!-- NAP repetido em texto para SEO local — manter idêntico ao Google Meu Negócio -->
       <p class="footer-nap">
