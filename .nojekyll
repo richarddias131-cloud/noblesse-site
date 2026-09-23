@@ -1,0 +1,7 @@
+Este arquivo desliga o Jekyll no GitHub Pages.
+
+Sem ele, o GitHub processa o site com o Jekyll antes de publicar e ignora
+qualquer arquivo ou pasta cujo nome comece com "_". O site é HTML puro e não
+precisa desse processamento: o deploy fica mais rápido e nada é filtrado.
+
+Pode manter este texto — o GitHub só verifica se o arquivo existe.

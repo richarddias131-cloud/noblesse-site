@@ -1,0 +1,29 @@
+# --------------------------------------------------------------------------
+# Fotos ORIGINAIS da loja (~1,3 MB) — o site não usa nenhuma delas: o que vai
+# ao ar são as versões .webp. Ficam de fora do repositório para não dobrar o
+# peso do deploy e não publicar arquivo que ninguém acessa.
+#
+# Elas continuam na sua pasta local (e no OneDrive, que já é backup). Se quiser
+# guardá-las no repositório também — por exemplo, para gerar recortes novos de
+# outro computador — basta apagar as três linhas abaixo.
+#
+# EXCEÇÃO: og-noblesse.jpg NÃO é ignorado. É a imagem da prévia de link no
+# WhatsApp e precisa estar publicada.
+#
+# EXCEÇÃO 2: os recortes *-crop.jpg (detalhe-ultrassom-3-crop.jpg e
+# detalhe-teste-uv-2-crop.jpg) também NÃO são ignorados — são as fotos usadas
+# de verdade nos cards de diferenciais, sem versão .webp ainda gerada.
+# --------------------------------------------------------------------------
+assets/img/loja-*.jpg
+assets/img/detalhe-*.jpg
+!assets/img/detalhe-ultrassom-3-crop.jpg
+!assets/img/detalhe-teste-uv-2-crop.jpg
+assets/img/vitrine-*.jpg
+assets/img/ivision-ambiente-16x9.jpg
+# foto original do logo na parede — dela saíram os .webp com fundo removido
+assets/img/logo-original.jpg
+
+# Lixo de sistema
+Thumbs.db
+desktop.ini
+.DS_Store
